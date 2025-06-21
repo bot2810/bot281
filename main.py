@@ -9,11 +9,10 @@ import os
 from datetime import datetime
 import pytz
 import logging
-from flask import Flask, request  # Added Flask import
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 # ✅ BOT CONFIG - Use environment variables for security
 BOT_TOKEN = os.getenv('BOT_TOKEN', '7999151899:AAGbMcaWiXzLFfS17t0ktuY7kE9madQjozk')
@@ -24,118 +23,6 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize bot: {e}")
     raise
-
-
-[... REST OF YOUR EXISTING CODE ...]
-
-# ✅ MAIN FUNCTION WITH IMPROVED ERROR HANDLING
-def run_bot():
-    """Run bot with robust error handling and restart mechanism"""
-    restart_count = 0
-    max_restarts = 5  # Reduced max restarts
-
-    while restart_count < max_restarts:
-        try:
-            logger.info("🤖 Bot starting...")
-
-            username = get_bot_username()
-            logger.info(f"✅ Bot connected: @{username}")
-            logger.info(f"📺 Watch Ads tasks: {len(task_sections['watch_ads'])}")
-            logger.info(f"📱 App Download tasks: {len(task_sections['app_downloads'])}")
-            logger.info(f"📢 Promotional tasks: {len(task_sections['promotional'])}")
-            logger.info(f"🎯 Client tasks: {len(client_tasks)}")
-            logger.info(f"👥 Total users: {len(user_balances)}")
-            logger.info(f"🚫 Banned users: {len(banned_users)}")
-            logger.info("🚨 REAL-TIME CLIENT TRACKING: ACTIVE")
-            logger.info("💾 Data persistence: ENABLED")
-            logger.info("🔧 Error handling: IMPROVED")
-            logger.info("✅ PayPal 7% tax: IMPLEMENTED")
-            logger.info("🔧 Withdrawal approval system: ENABLED")
-            logger.info("🛠️ Admin features: ENHANCED")
-            logger.info("🗑️ Task removal: ALL SECTIONS WORKING")
-            logger.info("🎯 Client tracking: REAL-TIME NOTIFICATIONS")
-            logger.info("⏰ Local time: INDIAN STANDARD TIME")
-            logger.info("🏷️ Fixed client IDs: IMPLEMENTED")
-            logger.info("🔙 Back buttons: COMPLETE")
-            logger.info("🔄 AUTO-TRACKING: ENABLED FOR ALL TASKS")
-            logger.info("🎯 Client task options: TRACKING & REMOVAL LINKS")
-            logger.info("📊 Enhanced admin panel: FULL FUNCTIONALITY")
-            logger.info("🚨 All bugs fixed and code optimized")
-            logger.info("📢 Notice feature: ENABLED")
-            logger.info("💳 Withdrawal approval system: ADDED")
-            logger.info("🔒 Watch Ads limit: ONE-TIME ONLY")
-            logger.info("💰 Auto-balance feature: ₹0.1+ AUTO ADDED")
-            logger.info("📺 Watch Ads tracking: REAL-TIME ENABLED")
-            logger.info("📱 App Download tracking: REAL-TIME ENABLED")
-            logger.info("🎯 Enhanced task tracking: ALL SECTIONS ACTIVE")
-            logger.info("🔄 Task tracking notifications: ADMIN ALERTS ACTIVE")
-            logger.info("🚀 Bot ready with ALL ENHANCED TRACKING FEATURES!")
-
-            # Start polling in a separate thread
-            polling_thread = threading.Thread(target=bot.infinity_polling, kwargs={
-                'timeout': 60,
-                'long_polling_timeout': 20,
-                'none_stop': True,
-                'interval': 2
-            })
-            polling_thread.start()
-            
-            return polling_thread
-
-        except KeyboardInterrupt:
-            logger.info("Bot stopped by user")
-            break
-        except Exception as e:
-            restart_count += 1
-            logger.error(f"❌ Bot error (attempt {restart_count}/{max_restarts}): {e}")
-
-            if restart_count < max_restarts:
-                wait_time = min(120, 20 * restart_count)  # Increased wait time
-                logger.info(f"🔄 Restarting in {wait_time} seconds...")
-                time.sleep(wait_time)
-            else:
-                logger.error(f"❌ Max restart attempts reached. Bot stopped.")
-                break
-
-    # Graceful shutdown
-    try:
-        if save_data():
-            logger.info("💾 Data saved before shutdown")
-        else:
-            logger.error("❌ Failed to save data on shutdown")
-    except Exception as e:
-        logger.error(f"❌ Error saving data on shutdown: {e}")
-    
-    logger.info("Bot shutdown completed")
-
-# Flask app setup
-app = Flask(_name_)
-
-@app.route('/')
-def home():
-    return "Telegram bot is running!"
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    if request.headers.get('content-type') == 'application/json':
-        json_string = request.get_data().decode('utf-8')
-        update = telebot.types.Update.de_json(json_string)
-        bot.process_new_updates([update])
-        return ''
-    else:
-        return 'Invalid content type', 403
-
-# ✅ RUN BOT
-if _name_ == "_main_":
-    # Start the bot in a separate thread
-    bot_thread = run_bot()
-    
-    # Run Flask app
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
-    
-    # Wait for bot thread to finish (though it likely won't in normal operation)
-    if bot_thread:
-        bot_thread.join()
 
 # ✅ BOT USERNAME CACHE
 BOT_USERNAME = None
