@@ -16,8 +16,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(_name_)
 
 # ✅ BOT CONFIG - Use environment variables for security
-BOT_TOKEN = os.getenv('BOT_TOKEN', '')
-ADMIN_ID = int(os.getenv('ADMIN_ID', ''))
+BOT_TOKEN = os.getenv('BOT_TOKEN', '7999151899:AAGbMcaWiXzLFfS17t0ktuY7kE9madQjozk')
+ADMIN_ID = int(os.getenv('ADMIN_ID', '7929115529'))
 
 try:
     bot = telebot.TeleBot(BOT_TOKEN)
