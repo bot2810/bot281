@@ -1,0 +1,18 @@
+{
+    "user_balances": {},
+    "worked_users": {},
+    "pending_tasks": {},
+    "referral_data": {},
+    "banned_users": [],
+    "completed_tasks": {},
+    "task_sections": {
+        "watch_ads": [],
+        "app_downloads": [],
+        "promotional": []
+    },
+    "client_tasks": {},
+    "client_referrals": {},
+    "client_id_counter": 1,
+    "withdrawal_requests": {},
+    "task_tracking": {}
+}
